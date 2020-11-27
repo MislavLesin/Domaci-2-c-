@@ -2,14 +2,21 @@
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 
 namespace ConsoleApp1
 {
     class Program
     {
+        struct song
+        {
+            public int index;
+            public string name;
+        };
         static void Main(string[] args)
         {
+            Random rnd = new Random();
             var unos = 11;
             var pjesme = new Dictionary< int, string>()
             {
@@ -76,6 +83,17 @@ namespace ConsoleApp1
                         PremijestanjePjesmePoListi(pjesme);
                         break;
 
+                    case 10:
+                        SpremanjeUFile(pjesme);
+                        break;
+
+                    case 11:
+                        CitanjeIzFilea(pjesme);
+                        break;
+                    case 12:
+                        Shuffle(pjesme,rnd);
+                        break;
+
                     default:
                         Console.WriteLine("Greska u unosu!!");
                         break;
@@ -85,6 +103,102 @@ namespace ConsoleApp1
             }
            
 
+        }
+
+        static void Shuffle(IDictionary<int,string> pjesme, Random rnd)
+        {
+            
+            var cnt = pjesme.Count;
+            song []songs= new song[cnt];
+            var x = 0;
+            
+            for(x = 0; x < cnt;x++)
+            {
+                pjesme.TryGetValue(x,out songs[x].name);
+            }
+
+            
+
+            pjesme.Clear();
+            var postoji = false;
+            var buff = -1;
+
+            songs = songs.OrderBy(x => rnd.Next()).ToArray();
+
+            for (var i = 0; i < cnt; i++)
+                songs[i].index = i;
+           
+            for (var i = 0; i < cnt; i ++)
+            {
+                Console.WriteLine(songs[i].index + " " + songs[i].name);
+            }
+
+            for(var i  = 0; i < cnt; i++)               //redom dodavanje iz niza u dictionary
+            {
+                for(var j = 0; j < cnt; j++)
+                {
+                    if (songs[j].index == i)
+                    {
+                        pjesme.Add(i, songs[j].name);
+                        break;
+                    }
+                        
+                }
+                
+            }
+        }
+        
+        static void CitanjeIzFilea(IDictionary<int,string> pjesme)
+        {
+            List<string> lines = new List<string>();
+            
+            string pathvar = @";C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\pjesme.txt";
+
+            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\ConsoleApp1\pjesme.txt");
+            while (file.EndOfStream == false)
+            {
+                lines.Add(file.ReadLine());
+                
+            }
+
+            file.Close();
+            var postoji = false;
+            var cnt = pjesme.Count;
+            for (var j = 0; j < lines.Count; j++ )
+            {
+
+                var line = lines[j];
+                var lineWords = line.Split(' ',2);
+                foreach(var pjesma in pjesme)
+                {
+                    if (String.Compare(pjesma.Value.ToLower(), lineWords[1].ToLower()) == 0)
+                        postoji = true;
+                }
+                if(postoji == false)
+                    pjesme.Add((int.Parse(lineWords[0]) + cnt), lineWords[1]);
+                else
+                {
+                    Console.WriteLine("Pijesma " + lineWords[1] + " postoji, ignoriram je!");
+                    postoji = false;
+                    cnt--;
+                }
+            }
+        }
+
+        static void SpremanjeUFile(IDictionary<int, string> pjesme)
+        {
+
+
+            using (System.IO.StreamWriter file =
+           new System.IO.StreamWriter(@"C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\ConsoleApp1\pjesme.txt")) 
+            {
+                foreach (var pjesma in pjesme)
+                {
+                    
+                        file.WriteLine(pjesma.Key + " " +pjesma.Value);
+                    
+                }
+            }
         }
 
         static void PremijestanjePjesmePoListi(IDictionary<int, string> pjesme)
@@ -363,6 +477,9 @@ namespace ConsoleApp1
             Console.WriteLine("7 - Brisanje cijele liste");
             Console.WriteLine("8 - Uredivanje imena pjesme");
             Console.WriteLine("9 - Uredivanje rednog broja pjesme"); //Znaci premjestanje pjesme po listi
+            Console.WriteLine("10 - Spremanje liste u datoteku");
+            Console.WriteLine("11 - Citanje liste iz datoteke");
+            Console.WriteLine("12 - Shuffle");
             Console.WriteLine("0 - Izlaz iz aplikacije");
           
         }
