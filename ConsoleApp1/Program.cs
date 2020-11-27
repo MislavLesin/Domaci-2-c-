@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace ConsoleApp1
 {
@@ -151,10 +152,7 @@ namespace ConsoleApp1
         static void CitanjeIzFilea(IDictionary<int,string> pjesme)
         {
             List<string> lines = new List<string>();
-            
-            string pathvar = @";C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\pjesme.txt";
-
-            System.IO.StreamReader file = new System.IO.StreamReader(@"C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\ConsoleApp1\pjesme.txt");
+            System.IO.StreamReader file = new System.IO.StreamReader("pjesme.txt");
             while (file.EndOfStream == false)
             {
                 lines.Add(file.ReadLine());
@@ -187,10 +185,8 @@ namespace ConsoleApp1
 
         static void SpremanjeUFile(IDictionary<int, string> pjesme)
         {
-
-
             using (System.IO.StreamWriter file =
-           new System.IO.StreamWriter(@"C:\Users\MislavLešin\Desktop\DUMP Drugi domaci\Domaci-2-c-\ConsoleApp1\pjesme.txt")) 
+           new System.IO.StreamWriter("pjesme.txt")) 
             {
                 foreach (var pjesma in pjesme)
                 {
