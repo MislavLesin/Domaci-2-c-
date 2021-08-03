@@ -93,20 +93,20 @@ namespace Vjezbanje_lito2021
         }
         public static void WriteMenu()
         {
-            Console.WriteLine("ODABERI AKCIJU: ");
-            Console.WriteLine("1 - Ispis cijele liste");
-            Console.WriteLine("2 - Ispis imena pjesme unosom pripadajuceg rednog broja");
-            Console.WriteLine("3 - Ispis rednog broja pjesme unosom pripadajuceg imena");
-            Console.WriteLine("4 - Unos nove pjesme");
-            Console.WriteLine("5 - Brisanje pjesme po rednom broju");
-            Console.WriteLine("6 - Brisanje pjesme po imenu");
-            Console.WriteLine("7 - Brisanje cijele liste");
-            Console.WriteLine("8 - Uredivanje imena pjesme");
-            Console.WriteLine("9 - Uredivanje rednog broja pjesme"); //Znaci premjestanje pjesme po listi
-            Console.WriteLine("10 - Spremanje liste u datoteku");
-            Console.WriteLine("11 - Citanje liste iz datoteke");
+            Console.WriteLine("Select action: ");
+            Console.WriteLine("1 - Print playlist");
+            Console.WriteLine("2 - Print song by sequence number");
+            Console.WriteLine("3 - Find song by name");
+            Console.WriteLine("4 - Enter new song");
+            Console.WriteLine("5 - Delete song by sequence number");
+            Console.WriteLine("6 - Delete song by name");
+            Console.WriteLine("7 - Delete playlist");
+            Console.WriteLine("8 - Edit song name");
+            Console.WriteLine("9 - Edit song sequence number");
+            Console.WriteLine("10 - Save playlist to file");
+            Console.WriteLine("11 - Read playlist from file");
             Console.WriteLine("12 - Shuffle");
-            Console.WriteLine("0 - Izlaz iz aplikacije");
+            Console.WriteLine("0 - Exit");
             Console.WriteLine("\n \n");
 
         }
